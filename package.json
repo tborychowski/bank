@@ -1,0 +1,16 @@
+{
+  "name": "bank",
+  "version": "1.0.0",
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {},
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "node-msg": "^1.2.3",
+    "puppeteer": "^1.6.2"
+  },
+  "devDependencies": {}
+}
