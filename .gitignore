@@ -9,3 +9,4 @@ tmp/
 *.db
 
 config.json
+yarn.lock

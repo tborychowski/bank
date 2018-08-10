@@ -37,9 +37,9 @@ function writeTable (data) {
 }
 
 
-async function login () {
+async function login (open) {
 	const loader = new Msg.loading();
-	const page = await browser.page();
+	const page = await browser.page(open);
 	await page.goto('https://onlinebanking.aib.ie/inet/roi/login.htm');
 
 	// PAGE 1
@@ -57,11 +57,13 @@ async function login () {
 	// Logged In
 	await page.waitFor(SELECTOR.accountOverview);
 	const html = await page.$eval(SELECTOR.accTable, e => e.outerHTML);
-	await page.browser().close();
 	loader.stop();
 
-	const acc = parseDataTable(html);
-	writeTable(acc);
+	if (!open) {
+		await page.browser().close();
+		const acc = parseDataTable(html);
+		writeTable(acc);
+	}
 }
 
 module.exports = login;

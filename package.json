@@ -8,6 +8,7 @@
   },
   "scripts": {},
   "dependencies": {
+    "arg-parser": "^1.2.0",
     "cheerio": "^1.0.0-rc.2",
     "node-msg": "^1.2.3",
     "puppeteer": "^1.6.2"

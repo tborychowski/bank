@@ -40,9 +40,9 @@ function writeTable (data) {
 }
 
 
-async function login () {
+async function login (open) {
 	const loader = new Msg.loading();
-	const page = await browser.page();
+	const page = await browser.page(open);
 	await page.goto('https://www.365online.com/online365/');
 
 
@@ -75,15 +75,25 @@ async function login () {
 
 
 	// Logged In
-	await navigationPromise;
-	// await page.waitFor(1000);
-	await page.waitFor('.content_body', { timeout: 5000 });
-	const html = await page.$eval('.content_body', e => e.innerHTML);
-	await page.browser().close();
+	let html;
+
+	try {
+		await navigationPromise;
+		// await page.waitFor(500);
+		await page.waitFor('.content_body', { timeout: 5000 });
+		html = await page.$eval('.content_body', e => e.innerHTML);
+	}
+	catch (e) {
+		Msg.error('BoI failed to load. Try again later.');
+	}
+
 	loader.stop();
 
-	const acc = parseDataTable(html);
-	writeTable(acc);
+	if (!open && html) {
+		await page.browser().close();
+		const acc = parseDataTable(html);
+		writeTable(acc);
+	}
 }
 
 module.exports = login;
