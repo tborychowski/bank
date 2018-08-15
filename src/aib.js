@@ -54,15 +54,25 @@ async function login (open) {
 	await enterDigit(page, 3, config.pin);
 	await page.click(SELECTOR.btnNext);
 
-	// Logged In
-	await page.waitFor(SELECTOR.accountOverview);
-	const html = await page.$eval(SELECTOR.accTable, e => e.outerHTML);
-	loader.stop();
+	let html;
+
+	try {
+		// Logged In
+		await page.waitFor(SELECTOR.accountOverview, { timeout: 5000 });
+		html = await page.$eval(SELECTOR.accTable, e => e.outerHTML);
+		loader.stop();
+	}
+	catch (e) {
+		loader.stop();
+		Msg.error('\nAIB failed to load. Try again later.');
+	}
 
 	if (!open) {
 		await page.browser().close();
-		const acc = parseDataTable(html);
-		writeTable(acc);
+		if (html) {
+			const acc = parseDataTable(html);
+			writeTable(acc);
+		}
 	}
 }
 

@@ -12,7 +12,11 @@ const SELECTOR = {
 	btnNext: '[id="form:continue"]',
 };
 
-const getText = el => el.text().trim().replace(/eur\s?/, '').replace(/\s{2,}/g, ' ');
+const getText = el => el.text().trim()
+	.replace(/eur\s?/, '')
+	.replace(/~ /, '')
+	.replace(/Account /, 'Acc ')
+	.replace(/\s{2,}/g, ' ');
 
 async function enterDigit (page, i, pin) {
 	const sel = `[id="form:security_number_digit${i}"]`;
@@ -70,29 +74,30 @@ async function login (open) {
 	await enterDigit(page, 5, config.pin);
 	await enterDigit(page, 6, config.pin);
 
-	const navigationPromise = page.waitForNavigation();
-	await page.click(SELECTOR.btnNext);
-
-
-	// Logged In
 	let html;
 
 	try {
+		const navigationPromise = page.waitForNavigation();
+		await page.click(SELECTOR.btnNext);
+
+		// Logged In
 		await navigationPromise;
-		// await page.waitFor(500);
+		await page.waitFor(500);
 		await page.waitFor('.content_body', { timeout: 5000 });
 		html = await page.$eval('.content_body', e => e.innerHTML);
+		loader.stop();
 	}
 	catch (e) {
-		Msg.error('BoI failed to load. Try again later.');
+		loader.stop();
+		Msg.error('\nBoI failed to load. Try again later.');
 	}
 
-	loader.stop();
-
-	if (!open && html) {
+	if (!open) {
 		await page.browser().close();
-		const acc = parseDataTable(html);
-		writeTable(acc);
+		if (html) {
+			const acc = parseDataTable(html);
+			writeTable(acc);
+		}
 	}
 }
 
