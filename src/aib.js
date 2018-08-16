@@ -53,6 +53,13 @@ async function login (open) {
 	await enterDigit(page, 2, config.pin);
 	await enterDigit(page, 3, config.pin);
 	await page.click(SELECTOR.btnNext);
+	await page.waitFor(500);
+
+	try {
+		const infoPage = await page.$(SELECTOR.btnNext);
+		if (infoPage) await page.click(SELECTOR.btnNext);
+	}
+	catch (e) { /*eslint no-empty: 0 */ }
 
 	let html;
 
