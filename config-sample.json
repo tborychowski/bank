@@ -2,12 +2,20 @@
 	"boi": {
 		"login": "123456",
 		"pin": "123456",
-		"phone": "0000",
+		"phone": "1234",
 		"dob": "01/01/1900"
 	},
 	"aib": {
 		"login": "12345678",
-		"phone": "0000",
+		"phone": "1234",
 		"pin": "12345"
+	},
+	"wbk": {
+		"login": "12345678",
+		"pass": "password"
+	},
+	"mbank": {
+		"login": "12345678",
+		"pass": "password"
 	}
 }

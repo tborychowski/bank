@@ -10,6 +10,7 @@
   "dependencies": {
     "arg-parser": "^1.2.0",
     "cheerio": "^1.0.0-rc.2",
+    "keychain": "^1.3.0",
     "node-msg": "^1.2.3",
     "puppeteer": "^1.6.2"
   },

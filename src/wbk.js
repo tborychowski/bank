@@ -1,7 +1,7 @@
 const cheerio = require('cheerio');
 const Msg = require('node-msg');
 const browser = require('./browser');
-const config = require('../config.json').wbk;
+const Config = require('./config');
 const BANK_NAME = 'BZWBK';
 const SELECTOR = {
 	login: '#input_nik',
@@ -46,6 +46,7 @@ function writeTable (data) {
 
 async function login (open) {
 	const loader = new Msg.loading();
+	const config = await Config.get('wbk');
 	const page = await browser.page(open);
 	await page.goto('https://www.centrum24.pl/centrum24-web/login');
 

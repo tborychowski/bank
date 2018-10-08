@@ -1,7 +1,7 @@
 const cheerio = require('cheerio');
 const Msg = require('node-msg');
 const browser = require('./browser');
-const config = require('../config.json').mbank;
+const Config = require('./config');
 const BANK_NAME = 'mBank';
 const SELECTOR = {
 	login: '#userID',
@@ -31,6 +31,7 @@ function writeTable (data) {
 
 async function login (open) {
 	const loader = new Msg.loading();
+	const config = await Config.get('mbank');
 	const page = await browser.page(open);
 	await page.goto('https://online.mbank.pl/pl/Login');
 

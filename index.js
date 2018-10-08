@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const Args = require('arg-parser');
 const Msg = require('node-msg');
+const config = require('./src/config');
 
 const banks = {
 	aib: require('./src/aib'),
@@ -13,6 +14,9 @@ const banks = {
 function run ({code, open}) {
 	if (!open && !code) return args.help();
 	if (open && !code) return Msg.error('\nWhich code should I open (boi or aib)?');
+
+	if (code === 'storeConfig') return config.storeConfig();
+	if (code === 'restoreConfig') return config.restoreConfig();
 
 	if (code === 'aib') return banks.aib(open);
 	if (code === 'boi') return banks.boi(open);
@@ -33,6 +37,6 @@ function run ({code, open}) {
 
 const args = new Args('Bank manager', '1.0', 'Show stats and auto-login');
 args.add({ name: 'open', desc: 'open browser and auto log-in', switches: [ '-o', '--open'] });
-args.add({ name: 'code', desc: 'Bank code (boi or aib or all)' });
+args.add({ name: 'code', desc: 'Bank code (boi, aib, wbk or mbank or all)' });
 
 if (args.parse()) run(args.params);

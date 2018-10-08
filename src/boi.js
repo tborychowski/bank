@@ -1,7 +1,7 @@
 const cheerio = require('cheerio');
 const Msg = require('node-msg');
 const browser = require('./browser');
-const config = require('../config.json').boi;
+const Config = require('./config');
 
 const SELECTOR = {
 	login: '[id="form:userId"]',
@@ -46,6 +46,7 @@ function writeTable (data) {
 
 async function login (open) {
 	const loader = new Msg.loading();
+	const config = await Config.get('boi');
 	const page = await browser.page(open);
 	await page.goto('https://www.365online.com/online365/');
 

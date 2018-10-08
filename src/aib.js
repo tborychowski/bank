@@ -1,7 +1,7 @@
 const cheerio = require('cheerio');
 const Msg = require('node-msg');
 const browser = require('./browser');
-const config = require('../config.json').aib;
+const Config = require('./config');
 
 const SELECTOR = {
 	login: '#regNumber_id',
@@ -39,6 +39,7 @@ function writeTable (data) {
 
 async function login (open) {
 	const loader = new Msg.loading();
+	const config = await Config.get('aib');
 	const page = await browser.page(open);
 	await page.goto('https://onlinebanking.aib.ie/inet/roi/login.htm');
 
