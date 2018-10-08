@@ -5,6 +5,8 @@ const Msg = require('node-msg');
 const banks = {
 	aib: require('./src/aib'),
 	boi: require('./src/boi'),
+	wbk: require('./src/wbk'),
+	mbank: require('./src/mbank'),
 };
 
 
@@ -14,12 +16,18 @@ function run ({code, open}) {
 
 	if (code === 'aib') return banks.aib(open);
 	if (code === 'boi') return banks.boi(open);
+	if (code === 'wbk') return banks.wbk(open);
+	if (code === 'mbank') return banks.mbank(open);
 
-	if (code ==='all' || (code.includes('aib') && code.includes('boi'))) {
+	if (code ==='all') {
 		if (open) return Msg.error('\nI can only open one bank at a time.');
 		banks.aib();
 		banks.boi();
+		banks.wbk();
+		banks.mbank();
+		return;
 	}
+	Msg.error('Unknown command.');
 }
 
 
