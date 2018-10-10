@@ -39,7 +39,7 @@ function parseDataTable (html) {
 function writeTable (data) {
 	Msg.log('\n');
 	const table = data.map(row => ([row.name, row.balance]));
-	table.unshift([Msg.magenta(BANK_NAME), 'Balance']);
+	table.unshift([Msg.green(BANK_NAME), 'Balance']);
 	Msg.table(table);
 }
 
