@@ -35,8 +35,12 @@ function run ({code, open}) {
 }
 
 
-const args = new Args('Bank manager', '1.0', 'Show stats and auto-login');
+const args = new Args('Bank manager', '2.0', 'Show stats or auto-login');
 args.add({ name: 'open', desc: 'open browser and auto log-in', switches: [ '-o', '--open'] });
-args.add({ name: 'code', desc: 'Bank code (boi, aib, wbk or mbank or all)' });
+args.add({ name: 'code', desc: `This can be one of the following:
+bank code: boi, aib, wbk, mbank - show stats for 1 bank
+all - show stats from all banks
+storeConfig - put your config file into the keychain
+restoreConfig - restore your config file from the keychain` });
 
 if (args.parse()) run(args.params);

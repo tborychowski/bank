@@ -1,8 +1,11 @@
 const fs = require('fs');
+const path = require('path');
 const keychain = require('keychain');
+const Msg = require('node-msg');
 const account = 'bank-script';
 const service = 'bank-script';
-/*eslint no-console: 0 */
+const  CONFIG_FILE = path.resolve(process.cwd(), 'config.json');
+
 
 function write (json) {
 	const password = JSON.stringify(json);
@@ -25,14 +28,18 @@ function read (key) {
 }
 
 function storeConfig () {
-	const config = require('../config.json');
-	if (!config) return console.error('Config file not found!');
-	return write(config);
+	if (!fs.existsSync(CONFIG_FILE)) return Msg.error('Config file not found!');
+	const config = require(CONFIG_FILE);
+	return write(config).then(() => {
+		Msg.success('Config securely stored in your Keychain');
+		fs.unlinkSync(CONFIG_FILE);
+	});
 }
 
 function restoreConfig () {
 	return read().then(res => {
-		fs.writeFileSync('./config.json', JSON.stringify(res, null, 4));
+		fs.writeFileSync(CONFIG_FILE, JSON.stringify(res, null, 4));
+		Msg.success('Config successfully restored');
 	});
 }
 
