@@ -5,8 +5,9 @@ const Config = require('./config');
 const BANK_NAME = 'BZWBK';
 const SELECTOR = {
 	login: '#input_nik',
-	btnNext: '#okBtn2',
+	btnNext: '#id2',
 	login2: '#ordinarypin',
+	btnNext2: '#okBtn2',
 	overview: '.md-accounts-details-parent',
 };
 
@@ -58,7 +59,7 @@ async function login (open) {
 	// PAGE 2
 	await page.waitFor(SELECTOR.login2);
 	await page.type(SELECTOR.login2, config.pass);
-	await page.click(SELECTOR.btnNext);
+	await page.click(SELECTOR.btnNext2);
 
 
 	let html;
