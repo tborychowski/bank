@@ -1,5 +1,9 @@
+NO LONGER USABLE, DUE TO REQUIRED 2FA.
+
+
 # bank
 scraper & auto-login for BoI and AIB.
+
 
 # install
 ```sh
